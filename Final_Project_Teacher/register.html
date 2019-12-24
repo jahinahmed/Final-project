@@ -24,7 +24,7 @@ var auto= 10;
 	
 	
 	function f2()
-{
+{ 
 	  var id = document.getElementById('uid').value;
  var pass= document.getElementById('pass').value;
  var cpass = document.getElementById('cpass').value;
@@ -35,8 +35,88 @@ var auto= 10;
  if( id=="" || pass=="" || cpass=="" ||name == "" || email== "" ||type.selectedIndex==0 ||type.selectedIndex==0)
 { document.getElementById('registerdiv').innerHTML="null submission";}
 else
-{ var usertype= type.value;
+{  var vname= name.split('');
+
+for(var a=0; a<vname.length;a++)
+{
+if(((vname[a]>='A'&&vname[a]<='Z') ||(vname[a]>='a'&&vname[a]<='z') ))
+{   
+continue;}
+else
+{ name= "false";
+break; 
+
+} }
+if (name=="false")
+{document.getElementById('registerdiv').innerHTML="Must be all leters";}
+else
+{
+ 
+var usertype= type.value;
 var usergender= gender.value;
+
+
+
+
+var position= email.search("@");
+if(position ==-1 || position== 0)
+{document.getElementById('registerdiv').innerHTML="invalid email";
+email= "no";
+}
+else 
+{var position1= email.search(".com");
+if(position1<position)
+{document.getElementById('registerdiv').innerHTML="invalid email";
+email= "no";
+}
+else
+{
+var valemail= email.split();
+if(!((valemail[0]>='A' && valemail[0]<='Z') || (valemail[0]>='a' && valemail[0]<='z')))
+ 	{document.getElementById('registerdiv').innerHTML="Invalid email";
+	email= "no";
+	}
+else
+{
+for(var a=1; a<valemail.length;a++)
+{
+if(((valemail[a]>='A'&&valemail[a]<='Z') ||(valemail[a]>='a'&&valemail[a]<='z') || valemail[a]=='.'|| valemail[a]=='@' ||(valemail[a]>=0 && valemail[a]<=9) ))
+	
+{ 
+	continue;
+}
+else
+{document.getElementById('registerdiv').innerHTML="invalid email";  
+email= "no";
+break;
+}
+}
+}
+}
+}
+ 
+if(email== "no")
+{document.getElementById('registerdiv').innerHTML="invalid email";}
+else
+{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if(cpass==pass)
 {
 var xhttp = new XMLHttpRequest();
@@ -46,8 +126,13 @@ var xhttp = new XMLHttpRequest();
 			
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-					if(this.responseText=="true")
+					if(this.responseText=="Admin")
 					{window.location.href='AdminHome.php';}
+					if(this.responseText=="Teacher")
+					{window.location.href='TeacherHome.php';}
+				    if(this.responseText== "Student")
+					{window.location.href='StudentHome.php';}
+					
 					 	else
 						{document.getElementById('registerdiv').innerHTML = this.responseText;}					 
 					}};
@@ -55,7 +140,10 @@ var xhttp = new XMLHttpRequest();
 }
 else
 {document.getElementById('registerdiv').innerHTML="passwords do not match";}
+}
 }}
+}
+
 
 </script>
 <body>
